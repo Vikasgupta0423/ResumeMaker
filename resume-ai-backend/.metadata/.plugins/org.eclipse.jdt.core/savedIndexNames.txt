@@ -50,6 +50,7 @@ INDEX VERSION 1.134+D:\Project\Resume_makeer\resume-ai-backend\.metadata\.plugin
 129278543.index
 2226558614.index
 1905322955.index
+1865797976.index
 3497024580.index
 4223032840.index
 2834181210.index
