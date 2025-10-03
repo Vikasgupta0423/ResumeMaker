@@ -8,6 +8,9 @@ import About from './pages/About'
 import Services from './pages/Services'
 import { Routes } from 'react-router'
 import Contact from './pages/Contact'
+import GenerateResume from './pages/GenerateResume'
+
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
@@ -17,6 +20,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="about" element={<About />} />
           <Route path="services" element={<Services />} />
           <Route path="contact" element={<Contact />} />
+          <Route path="generate-resume" element={<GenerateResume />} />
         </Route>
       </Routes>
     </BrowserRouter>

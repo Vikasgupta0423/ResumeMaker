@@ -1,8 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const ResumeAILandingPage = () => {
   const [email, setEmail] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  // Mouse move effect for interactive background
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePosition({
+        x: (e.clientX / window.innerWidth) * 100,
+        y: (e.clientY / window.innerHeight) * 100
+      });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
 
   const features = [
     {
@@ -86,7 +100,7 @@ const ResumeAILandingPage = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
-      <header className="sticky top-0 z-50 bg-white shadow-sm">
+      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm">
         <div className="navbar container mx-auto px-4">
           <div className="flex-1">
             <a className="btn btn-ghost normal-case text-xl font-bold text-purple-700">
@@ -117,62 +131,148 @@ const ResumeAILandingPage = () => {
                 </ul>
               )}
             </div>
-            <a href="#create-resume" className="btn btn-primary ml-4">Create Resume</a>
+            {/* <a href="#create-resume" className="btn btn-primary ml-4">Create Resume</a> */}
           </div>
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-purple-600 to-indigo-800 text-white py-16 md:py-24">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row items-center">
-            <div className="md:w-1/2 mb-10 md:mb-0">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">Create Your Perfect Resume with AI</h1>
-              <p className="text-xl mb-8 opacity-90">Transform your career story into a professional, ATS-friendly resume that gets you noticed by employers.</p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <a href="#create-resume" className="btn btn-primary btn-lg text-lg">
-                  <span className="mr-2">⚡</span> Create Resume Now
-                </a>
-                <a href="#features" className="btn btn-outline btn-lg text-lg text-white border-white hover:bg-white hover:text-purple-700">
-                  <span className="mr-2">▶️</span> See How It Works
-                </a>
+      {/* Enhanced Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0">
+          {/* Gradient Background */}
+          <div 
+            className="absolute inset-0 transition-all duration-1000"
+            style={{
+              background: `
+                radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at ${100 - mousePosition.x}% ${100 - mousePosition.y}%, rgba(255, 119, 198, 0.15) 0%, transparent 50%),
+                linear-gradient(135deg, #667eea 0%, #764ba2 50%, #6B8DD6 100%)
+              `
+            }}
+          />
+          
+          {/* Animated Shapes */}
+          <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
+          <div className="absolute top-1/3 right-1/4 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-bounce"></div>
+          <div className="absolute bottom-1/4 left-1/3 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-1000"></div>
+          
+          {/* Grid Pattern Overlay */}
+          <div 
+            className="absolute inset-0 opacity-10"
+            style={{
+              backgroundImage: `
+                linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+              `,
+              backgroundSize: '50px 50px'
+            }}
+          />
+          
+          {/* Floating Particles */}
+          {[...Array(15)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-2 h-2 bg-white rounded-full opacity-30"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animation: `float ${6 + Math.random() * 4}s ease-in-out infinite`,
+                animationDelay: `${Math.random() * 5}s`,
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Content */}
+        <div className="relative z-10 container mx-auto px-4 text-center text-white">
+          <div className="max-w-4xl mx-auto">
+            {/* Animated Badge */}
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 mb-8 animate-fade-in">
+              <div className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></div>
+              <span className="text-sm font-medium">AI-Powered Resume Builder</span>
+            </div>
+
+            {/* Main Heading with Typing Animation Effect */}
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
+              <span className="block bg-clip-text text-transparent bg-gradient-to-r from-white to-purple-100" style={{backgroundSize: '200% 200%', animation: 'gradient 8s ease infinite'}}>
+                Create Your
+              </span>
+              <span className="block bg-clip-text text-transparent bg-gradient-to-r from-purple-200 to-pink-200 mt-2" style={{backgroundSize: '200% 200%', animation: 'gradient 8s ease infinite 0.5s'}}>
+                Perfect Resume
+              </span>
+            </h1>
+
+            {/* Subheading */}
+            <p className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto leading-relaxed opacity-90">
+              Transform your career story into a professional, <span className="font-semibold text-purple-200">ATS-friendly resume</span> that gets you noticed by employers.
+            </p>
+
+            {/* Stats */}
+            <div className="flex justify-center items-center gap-8 mb-8 text-sm md:text-base">
+              <div className="text-center">
+                <div className="text-2xl md:text-3xl font-bold text-white">10K+</div>
+                <div className="text-purple-200">Resumes Created</div>
+              </div>
+              <div className="w-px h-8 bg-white/30"></div>
+              <div className="text-center">
+                <div className="text-2xl md:text-3xl font-bold text-white">89%</div>
+                <div className="text-purple-200">Interview Rate</div>
+              </div>
+              <div className="w-px h-8 bg-white/30"></div>
+              <div className="text-center">
+                <div className="text-2xl md:text-3xl font-bold text-white">4.9/5</div>
+                <div className="text-purple-200">User Rating</div>
               </div>
             </div>
-            <div className="md:w-1/2 flex justify-center">
-              <div className="mockup-window border bg-base-300 w-full max-w-md">
-                <div className="flex justify-center px-4 py-16 bg-base-200">
-                  <div className="w-full max-w-sm">
-                    <div className="bg-white rounded-lg shadow-lg p-6 text-gray-800">
-                      <div className="flex items-center mb-4">
-                        <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center">
-                          <span className="text-purple-600 text-xl">👤</span>
-                        </div>
-                        <div className="ml-4">
-                          <h3 className="font-bold">John Doe</h3>
-                          <p className="text-gray-600 text-sm">Software Engineer</p>
-                        </div>
-                      </div>
-                      <div className="mb-4">
-                        <h4 className="text-sm font-semibold text-gray-700 mb-2">Experience</h4>
-                        <ul className="text-xs text-gray-600 list-disc pl-4">
-                          <li>Senior Developer at TechCorp (2020-Present)</li>
-                          <li>Full Stack Developer at WebSolutions (2018-2020)</li>
-                        </ul>
-                      </div>
-                      <div className="mb-4">
-                        <h4 className="text-sm font-semibold text-gray-700 mb-2">Skills</h4>
-                        <div className="flex flex-wrap gap-1">
-                          <span className="badge badge-outline badge-sm">JavaScript</span>
-                          <span className="badge badge-outline badge-sm">React</span>
-                          <span className="badge badge-outline badge-sm">Node.js</span>
-                          <span className="badge badge-outline badge-sm">Python</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
+              <a 
+                href="#create-resume" 
+                className="group relative overflow-hidden btn btn-lg text-lg px-8 py-4 rounded-2xl border-0 transform hover:scale-105 transition-all duration-300 shadow-2xl"
+                style={{background: 'linear-gradient(to right, #8B5CF6, #EC4899)'}}
+              >
+                <span className="relative z-10 flex items-center">
+                  <span className="mr-3 text-xl">⚡</span>
+                  Create Resume Now
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 group-hover:from-purple-700 group-hover:to-pink-700 transition-all duration-300"></div>
+              </a>
+              
+              <a 
+                href="#features" 
+                className="btn btn-lg btn-outline text-lg px-8 py-4 rounded-2xl border-2 border-white text-white bg-transparent hover:bg-white hover:text-purple-700 transform hover:scale-105 transition-all duration-300 backdrop-blur-sm"
+              >
+                <span className="mr-3">▶️</span>
+                Watch Demo
+              </a>
+            </div>
+
+            {/* Trust Badges */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-purple-200">
+              <div className="flex items-center gap-2">
+                <span>🔒</span>
+                <span>Secure & Private</span>
+              </div>
+              <div className="hidden sm:block w-px h-4 bg-white/30"></div>
+              <div className="flex items-center gap-2">
+                <span>🚀</span>
+                <span>No Credit Card Required</span>
+              </div>
+              <div className="hidden sm:block w-px h-4 bg-white/30"></div>
+              <div className="flex items-center gap-2">
+                <span>⭐</span>
+                <span>4.9/5 Stars</span>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-white rounded-full mt-2 animate-pulse"></div>
           </div>
         </div>
       </section>
@@ -353,6 +453,29 @@ const ResumeAILandingPage = () => {
           <p>Copyright © {new Date().getFullYear()} - All rights reserved by ResumeAI</p>
         </div>
       </footer>
+
+      {/* Add custom styles for animations */}
+      <style jsx>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        @keyframes gradient {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fade-in {
+          animation: fadeIn 1s ease-out;
+        }
+      `}</style>
     </div>
   );
 };
