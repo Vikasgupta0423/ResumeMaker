@@ -7,6 +7,7 @@ import Home from './pages/Home'
 import About from './pages/About'
 import Services from './pages/Services'
 import { Routes } from 'react-router'
+import Contact from './pages/Contact'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
@@ -15,6 +16,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="home" element={<Home />} />
           <Route path="about" element={<About />} />
           <Route path="services" element={<Services />} />
+          <Route path="contact" element={<Contact />} />
         </Route>
       </Routes>
     </BrowserRouter>
